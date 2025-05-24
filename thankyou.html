@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Спасибо за оплату</title>
+  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="quest.css" />
 </head>
 <body>
@@ -22,10 +23,17 @@
     </nav>
   </header>
 
-  <main class="container">
-    <h2>Спасибо за оплату!</h2>
-    <p>Скачивание вашего квеста начнется автоматически. Если это не произошло, нажмите кнопку ниже.</p>
-    <div id="download-area"></div>
+  <main class="quest-main container">
+    <div class="quest-layout">
+      <div class="quest-left">
+        <img id="quest-image" src="" alt="Изображение квеста" />
+      </div>
+      <div class="quest-right">
+        <h1 id="quest-title">Спасибо за оплату!</h1>
+        <p id="quest-message">Ваш квест готов к скачиванию. Нажмите кнопку ниже, чтобы загрузить файл.</p>
+        <a id="download-button" href="#" class="download-link" target="_blank">📥 Скачать квест</a>
+      </div>
+    </div>
   </main>
 
   <script>
@@ -35,39 +43,37 @@
     const downloadLinks = {
       dorsay: {
         name: "Музей Орсе. Париж",
-        url: "https://www.dropbox.com/scl/fi/4pz7ibc5ovz48ozxmixyd/dorsay.zip?rlkey=6pj31qqvzxft4sog0gwmnt66k&st=rx7r200m&dl=0"
+        image: "dorsay.jpg",
+        url: "https://www.dropbox.com/scl/fi/4pz7ibc5ovz48ozxmixyd/dorsay.zip?rlkey=6pj31qqvzxft4sog0gwmnt66k&st=3wnxm95s&dl=0"
       },
       louvre: {
         name: "Лувр. Париж",
-        url: "https://drive.google.com/uc?export=download&id=YOUR_LUVRE_FILE_ID"
+        image: "louvre.jpg",
+        url: "https://drive.google.com/uc?export=download&id=EXAMPLE_LUVRE_FILE_ID"
       },
       britishmuseum: {
         name: "Британский музей. Лондон",
-        url: "https://drive.google.com/uc?export=download&id=YOUR_BM_FILE_ID"
+        image: "britishmuseum.jpg",
+        url: "https://drive.google.com/uc?export=download&id=EXAMPLE_BM_FILE_ID"
       }
     };
 
     const quest = downloadLinks[questId];
-    const container = document.getElementById("download-area");
+    const imageEl = document.getElementById("quest-image");
+    const titleEl = document.getElementById("quest-title");
+    const buttonEl = document.getElementById("download-button");
 
     if (quest) {
-      // Create manual download button
-      const link = document.createElement("a");
-      link.href = quest.url;
-      link.className = "download-link";
-      link.textContent = `📥 Скачать "${quest.name}"`;
-      link.download = ""; // Optional: suggest browser treat it as download
-      container.appendChild(link);
-
-      // Auto-start download
-      const autoLink = document.createElement("a");
-      autoLink.href = quest.url;
-      autoLink.download = "";
-      autoLink.style.display = "none";
-      document.body.appendChild(autoLink);
-      autoLink.click();
+      imageEl.src = quest.image;
+      imageEl.alt = `Квест: ${quest.name}`;
+      titleEl.textContent = `Спасибо за оплату!`;
+      buttonEl.href = quest.url;
+      buttonEl.textContent = `📥 Скачать "${quest.name}"`;
     } else {
-      container.innerHTML = "<p>Квест не найден. Пожалуйста, свяжитесь с нами, если у вас возникли проблемы.</p>";
+      titleEl.textContent = "Квест не найден";
+      buttonEl.style.display = "none";
+      document.getElementById("quest-message").textContent = "Пожалуйста, свяжитесь с нами, если у вас возникли проблемы.";
+      imageEl.style.display = "none";
     }
   </script>
 
