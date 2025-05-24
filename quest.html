@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Квест</title>
+  <link rel="stylesheet" href="quest.css" />
+  <style>
+    .zoom-gallery {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .zoom-gallery img {
+      max-height: 120px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+      cursor: zoom-in;
+    }
+    .zoom-gallery img:hover {
+      transform: scale(2.5);
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="logo.png" alt="Kids Museum Quests logo" />
+      <div>
+        <h1>Квесты для детей в музее</h1>
+        <p>Красочные познавательные квесты для юных исследователей музеев по всему миру.</p>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Главная</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="quest-main container">
+    <div class="quest-layout">
+      <div class="quest-left">
+        <img id="quest-image" src="" alt="Изображение квеста" />
+      </div>
+      <div class="quest-right">
+        <h1 id="quest-title">Название квеста</h1>
+        <p id="quest-subtitle" class="quest-subtitle">Подзаголовок появится здесь</p>
+        <p id="quest-description" class="quest-description"></p>
+        <p>Стоимость 5 евро (для оплаты из России - 500 рублей).</p>
+
+
+        <div class="action-links">
+          <a id="payment-button" href="#" class="donate-button">💳 Купить </a>
+        </div>
+
+        <div class="image-gallery">
+          <h2>Отрывок из квеста</h2>
+          <div class="zoom-gallery" id="zoom-gallery"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const quests = {
+      dorsay: {
+        title: "Музей Орсе. Париж",
+        subtitle: "Помоги путешественнице во времени найти детали своей машины времени.",
+        description: "Ищи картины, отвечай на вопросы квеста, выполняй творческие задания и собирай кусочки пазла развалившейся машины времени.",
+        image: "dorsay.jpg",
+        donate: "payment.html?quest=dorsay",
+        gallery: ["dorsay title.png", "dorsay page 2.png", "dorsay page 11.png", "dorsay page 8.png"]
+      },
+      louvre: {
+        title: "Лувр. Париж",
+        subtitle: "Отыщи мировые шедевры.",
+        description: "Погрузись в тайный мир Леонардо да Винчи.",
+        image: "louvre.jpg",
+        donate: "payment.html?quest=louvre",
+        gallery: ["dorsay title.png", "dorsay page 2.png", "dorsay page 11.png", "dorsay page 8.png"]
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const questId = params.get('id');
+
+    if (questId && quests[questId]) {
+      const quest = quests[questId];
+      document.getElementById('quest-title').textContent = quest.title;
+      document.getElementById('quest-subtitle').textContent = quest.subtitle;
+      document.getElementById('quest-description').textContent = quest.description;
+      document.getElementById('quest-image').src = quest.image;
+      document.getElementById('payment-button').href = quest.donate;
+
+
+      const galleryContainer = document.getElementById('zoom-gallery');
+      if (quest.gallery && galleryContainer) {
+        quest.gallery.forEach(img => {
+          const imageEl = document.createElement('img');
+          imageEl.src = img;
+          imageEl.alt = `Галерея ${quest.title}`;
+          galleryContainer.appendChild(imageEl);
+        });
+      }
+    } else {
+      document.getElementById('quest-title').textContent = "Квест не найден";
+      document.getElementById('quest-subtitle').style.display = "none";
+      document.getElementById('quest-description').textContent = "Мы не нашли квест, который вы ищете.";
+      document.getElementById('quest-image').style.display = "none";
+      document.getElementById('donate-link').style.display = "none";
+      document.getElementById('download-link').style.display = "none";
+    }
+  </script>
+
+  <section id="contact">
+    <h2>Контакты</h2>
+    <p>Вы можете связаться со мной:</p>
+    <address>
+      <strong>Email:</strong> <a href="mailto:museum.kid.quests@gmail.com">museum.kid.quests@gmail.com</a><br />
+      <strong>Social:</strong> <a href="#">Instagram</a> | <a href="#">Facebook</a>
+    </address>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Kids Museum Quests. All rights reserved.</p>
+    <p>Designed with ❤️ to make museums magical for families.</p>
+  </footer>
+
+</body>
+</html>
