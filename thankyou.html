@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Спасибо за оплату</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="quest.css" />
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="logo.png" alt="Kids Museum Quests logo" />
+      <div>
+        <h1>Квесты для детей в музее</h1>
+        <p>Красочные познавательные квесты для юных исследователей музеев по всему миру.</p>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Главная</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="quest-main container">
+    <div class="quest-layout">
+      <div class="quest-left">
+        <img id="quest-image" src="" alt="Изображение квеста" />
+      </div>
+      <div class="quest-right">
+        <h1 id="quest-title">Спасибо за оплату!</h1>
+        <p id="quest-message">Ваш квест готов к скачиванию. Нажмите кнопку ниже, чтобы загрузить файл.</p>
+        <a id="download-button" href="#" class="download-link" target="_blank">📥 Скачать квест</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const questId = params.get("quest");
+
+    const downloadLinks = {
+      dorsay: {
+        name: "Музей Орсе. Париж",
+        image: "dorsay.jpg",
+        url: "https://www.dropbox.com/scl/fi/4pz7ibc5ovz48ozxmixyd/dorsay.zip?rlkey=6pj31qqvzxft4sog0gwmnt66k&st=3wnxm95s&dl=0"
+      },
+      louvre: {
+        name: "Лувр. Париж",
+        image: "louvre.jpg",
+        url: "https://drive.google.com/uc?export=download&id=EXAMPLE_LUVRE_FILE_ID"
+      },
+      britishmuseum: {
+        name: "Британский музей. Лондон",
+        image: "britishmuseum.jpg",
+        url: "https://drive.google.com/uc?export=download&id=EXAMPLE_BM_FILE_ID"
+      }
+    };
+
+    const quest = downloadLinks[questId];
+    const imageEl = document.getElementById("quest-image");
+    const titleEl = document.getElementById("quest-title");
+    const buttonEl = document.getElementById("download-button");
+
+    if (quest) {
+      imageEl.src = quest.image;
+      imageEl.alt = `Квест: ${quest.name}`;
+      titleEl.textContent = `Спасибо за оплату!`;
+      buttonEl.href = quest.url;
+      buttonEl.textContent = `📥 Скачать "${quest.name}"`;
+    } else {
+      titleEl.textContent = "Квест не найден";
+      buttonEl.style.display = "none";
+      document.getElementById("quest-message").textContent = "Пожалуйста, свяжитесь с нами, если у вас возникли проблемы.";
+      imageEl.style.display = "none";
+    }
+  </script>
+
+    <section id="contact">
+        <h2>Контакты</h2>
+        <p>Вы можете связаться со мной:</p>
+        <address>
+            <strong>Email:</strong> <a href="mailto:museum.kid.quests@gmail.com">museum.kid.quests@gmail.com</a><br />
+            <strong>Social:</strong> <a href="#">Instagram</a> | <a href="#">Facebook</a>
+        </address>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Kids Museum Quests. All rights reserved.</p>
+        <p>Designed with ❤️ to make museums magical for families.</p>
+    </footer>
+    
+</body>
+</html>
